@@ -4,6 +4,7 @@
 State_Menu::State_Menu(StateManager * lStateManager)
 	:BaseState(lStateManager)
 {
+	mCurrentOption = 1;
 }
 
 State_Menu::~State_Menu()
@@ -11,38 +12,44 @@ State_Menu::~State_Menu()
 }
 
 void State_Menu::OnCreate(){
-	if (!TMainMenuBackground.loadFromFile("img/MainMenuPlaceHolder.png")) {
-		std::cout << "Could not find img/MainMenu.png\n";
-	}
-	else {
-		SMainMenuBackground.setTexture(TMainMenuBackground);
-	}
 
-	if (!MainFont.loadFromFile("fonts/bahnschrift.ttf")) {
-		std::cout << "Could not find fonts/bahnschrift.ttf\n";
-	}
-	else {
-		//This is catastrophicaly bad, but it will do for now
-		play.setFont(MainFont);
-		play.setString(">PLAY<");
-		play.setCharacterSize(30);
-		play.setPosition(sf::Vector2f(120.0, 170.0));
+	mStateManager->GetContext()->mTextureManager->RequireResource("MenuPlaceholder");
+	sf::Texture* tex = mStateManager->GetContext()->mTextureManager->GetResource("MenuPlaceholder");
+	SMainMenuBackground.setTexture(*tex);
 
-		credits.setFont(MainFont);
-		credits.setString(">CREDITS<");
-		credits.setCharacterSize(30);
-		credits.setPosition(sf::Vector2f(100.0, 220.0));
+	mStateManager->GetContext()->mFontManager->RequireResource("MainFont");
+	sf::Font* MainFont = mStateManager->GetContext()->mFontManager->GetResource("MainFont");
 
-		exit.setFont(MainFont);
-		exit.setString(">EXIT<");
-		exit.setCharacterSize(30);
-		exit.setPosition(sf::Vector2f(126.0, 320.0));
+	mStateManager->GetContext()->mEventManager->AddCallback(StateType::Menu, "W", &State_Menu::ChangeOptionUp, this);
+	mStateManager->GetContext()->mEventManager->AddCallback(StateType::Menu, "S", &State_Menu::ChangeOptionDown, this);
 
-	}
+	mStateManager->GetContext()->mEventManager->AddCallback(StateType::Menu, "Enter", &State_Menu::ChooseOptionEnter, this);
+
+	play.setFont(*MainFont);
+	play.setString(">PLAY<");
+	//play.setFillColor(sf::Color::Red);
+	play.setCharacterSize(30);
+	play.setPosition(sf::Vector2f(120.0, 170.0));
+
+	credits.setFont(*MainFont);
+	credits.setString(">CREDITS<");
+	credits.setCharacterSize(30);
+	credits.setPosition(sf::Vector2f(100.0, 220.0));
+
+	exit.setFont(*MainFont);
+	exit.setString(">EXIT<");
+	exit.setCharacterSize(30);
+	exit.setPosition(sf::Vector2f(126.0, 320.0));
+
 }
 
 void State_Menu::OnDestroy()
 {
+	mStateManager->GetContext()->mTextureManager->ReleaseResource("MenuPlaceholder");
+	mStateManager->GetContext()->mFontManager->ReleaseResource("MainFont");
+	mStateManager->GetContext()->mEventManager->RemoveCallback(StateType::Menu, "W");
+	mStateManager->GetContext()->mEventManager->RemoveCallback(StateType::Menu, "S");
+	mStateManager->GetContext()->mEventManager->RemoveCallback(StateType::Menu, "Enter");
 }
 
 void State_Menu::Activate()
@@ -62,4 +69,48 @@ void State_Menu::Draw(){
 
 void State_Menu::Update(const sf::Time & lTime)
 {
+	if (mCurrentOption == 1) {
+		play.setFillColor(sf::Color::Red);
+		credits.setFillColor(sf::Color::White);
+		exit.setFillColor(sf::Color::White);
+	}
+	else if (mCurrentOption == 2) {
+		play.setFillColor(sf::Color::White);
+		credits.setFillColor(sf::Color::Red);
+		exit.setFillColor(sf::Color::White);
+	}
+	else if (mCurrentOption == 3) {
+		play.setFillColor(sf::Color::White);
+		credits.setFillColor(sf::Color::White);
+		exit.setFillColor(sf::Color::Red);
+	}
 }
+
+void State_Menu::ChangeOptionDown(EventDetails* lDetails) {
+	if (mCurrentOption != 3) {
+		mCurrentOption += 1;
+	}
+}
+
+void State_Menu::ChooseOptionEnter(EventDetails* lDetails) {
+	switch (mCurrentOption) {
+	case 1:
+		mStateManager->SwitchTo(StateType::Maze);
+		break;
+
+	case 2:
+		mStateManager->SwitchTo(StateType::Credits);
+		break;
+
+	case 3:
+		mStateManager->GetContext()->mWindow->EndProgram(nullptr);
+		break;
+	}
+}
+
+void State_Menu::ChangeOptionUp(EventDetails* lDetails) {
+	if (mCurrentOption != 1) {
+		mCurrentOption -= 1;
+	}
+}
+

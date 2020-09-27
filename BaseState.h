@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include "EventManager.h"
 
 class StateManager;
 class BaseState
@@ -38,8 +39,13 @@ public:
 	{
 		return mStateManager;
 	}
+	sf::View& GetView()
+	{
+		return mView;
+	}
 protected:
 	StateManager* mStateManager;
 	bool mIsTransparent;
 	bool mIsTranscendent;
+	sf::View mView;
 };

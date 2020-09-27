@@ -2,6 +2,9 @@
 #include "Window.h"
 #include "SharedContext.h"
 #include "StateManager.h"
+#include "TextureManager.h"
+#include "FontManager.h"
+#include "AudioManager.h"
 
 class Game
 {
@@ -24,6 +27,9 @@ private:
 	sf::Clock mClock;
 	sf::Time mElapsed;
 	Window mWindow;
-	StateManager mStateManager;
 	SharedContext mContext;
+	TextureManager mTextureManger;
+	FontManager mFontManager;
+	AudioManager mAudioManager;
+	StateManager mStateManager;
 };

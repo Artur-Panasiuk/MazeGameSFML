@@ -6,13 +6,6 @@
 
 class Window
 {
-	void Open();
-	void Close();
-
-	bool mIsDone;
-	bool mIsFullscreen;
-	sf::RenderWindow mWindow;
-	EventManager mEventManager;
 public:
 	Window();
 	~Window();
@@ -22,10 +15,20 @@ public:
 	void Draw(const sf::Drawable &lSprite);
 	void BeginDrawing();
 	void EndDrawing();
-	void ToggleFullscreen();
-	void EndProgram();
+	void ToggleFullscreen(EventDetails* lDetails);
+	void EndProgram(EventDetails* lDetails);
 
 	void Update();
 
+	sf::FloatRect GetViewSpace();
 	EventManager* GetEventManager();
+	sf::RenderWindow* GetRenderWindow();
+private:
+	void Open();
+	void Close();
+
+	bool mIsDone;
+	bool mIsFullscreen;
+	sf::RenderWindow mWindow;
+	EventManager mEventManager;
 };

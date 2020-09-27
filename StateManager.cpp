@@ -43,6 +43,7 @@ void StateManager::Draw()
 		{
 			for (; i < mStates.size(); ++i)
 			{
+				mContext->mWindow->GetRenderWindow()->setView(mStates[i].second->GetView());
 				mStates[i].second->Draw();
 			}
 			break;
@@ -92,6 +93,7 @@ void StateManager::SwitchTo(const StateType & lState)
 			mStates.erase(mStates.begin() + i);
 			mStates.push_back(std::make_pair(type, state));
 			mStates.back().second->Activate();
+			mContext->mWindow->GetRenderWindow()->setView(state->GetView());
 			return;
 		}
 	}
@@ -99,6 +101,7 @@ void StateManager::SwitchTo(const StateType & lState)
 	if (!mStates.empty()) { mStates.back().second->Deactivate(); }
 	CreateState(lState);
 	mStates.back().second->Activate();
+	mContext->mWindow->GetRenderWindow()->setView(mStates.back().second->GetView());
 }
 
 void StateManager::Remove(const StateType & lState)
@@ -111,6 +114,7 @@ void StateManager::CreateState(const StateType & lState)
 	auto newState = mStateFactory.find(lState);
 	if (newState == mStateFactory.end()) { return; }
 	BaseState* state = mStateFactory[lState]();
+	state->mView = mContext->mWindow->GetRenderWindow()->getDefaultView();
 	mStates.emplace_back(lState, state);
 	state->OnCreate();
 }

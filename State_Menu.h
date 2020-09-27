@@ -1,5 +1,7 @@
 #pragma once
 #include "BaseState.h"
+#include "EventManager.h"
+#include <string>
 
 class State_Menu : public BaseState
 {
@@ -16,12 +18,16 @@ public:
 	void Draw();
 	void Update(const sf::Time& lTime);
 private:
-	sf::Texture TMainMenuBackground;
-	sf::Sprite SMainMenuBackground;
+	unsigned int mCurrentOption;
 
-	sf::Font MainFont;
+	sf::Sprite SMainMenuBackground;
 
 	sf::Text play;
 	sf::Text credits;
 	sf::Text exit;
+
+	void ChangeOptionUp(EventDetails *lDetails);
+	void ChangeOptionDown(EventDetails *lDetails);
+	
+	void ChooseOptionEnter(EventDetails* lDetails);
 };

@@ -16,4 +16,10 @@ public:
 	void Draw();
 	void Update(const sf::Time& lTime);
 private:
+	sf::Sprite SCreditsBackground;
+
+	sf::Text exit;
+
+	void GoBackMenu(EventDetails* lDetails);
+
 };

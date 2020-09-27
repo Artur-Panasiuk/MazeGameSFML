@@ -45,14 +45,14 @@ void Window::EndDrawing()
 	mWindow.display();
 }
 
-void Window::ToggleFullscreen()
+void Window::ToggleFullscreen(EventDetails* lDetails)
 {
 	mIsFullscreen = !mIsFullscreen;
 	Close();
 	Open();
 }
 
-void Window::EndProgram()
+void Window::EndProgram(EventDetails* lDetails)
 {
 	mIsDone = true;
 }
@@ -76,7 +76,21 @@ void Window::Update()
 	mEventManager.Update();
 }
 
+sf::FloatRect Window::GetViewSpace()
+{
+	sf::Vector2f viewCenter(mWindow.getView().getCenter());
+	sf::Vector2f viewSize(mWindow.getView().getSize());
+	sf::Vector2f viewSizeHalf(viewSize.x / 2, viewSize.y / 2);
+	sf::FloatRect viewSpace(viewCenter - viewSizeHalf, viewSize);
+	return viewSpace;
+}
+
 EventManager * Window::GetEventManager()
 {
 	return &mEventManager;
+}
+
+sf::RenderWindow * Window::GetRenderWindow()
+{
+	return &mWindow;
 }
