@@ -1,7 +1,8 @@
 #include "SpriteSheet.h"
 
 SpriteSheet::SpriteSheet(TextureManager * lTexManager)
-	:mTextureManager(lTexManager), mCurrentAnimation(nullptr), mSpriteScale(1.f , 1.f)
+	:mTextureManager(lTexManager), mCurrentAnimation(nullptr), mSpriteScale(1.f , 1.f),
+	mDirection(Dir::Right)
 {
 }
 
@@ -25,6 +26,11 @@ sf::Vector2f SpriteSheet::GetSpritePosition() const
 	return mSprite.getPosition();
 }
 
+Dir SpriteSheet::GetDirection()
+{
+	return mDirection;
+}
+
 void SpriteSheet::SetSpriteSize(const sf::Vector2i & lSize)
 {
 	mSpriteSize = lSize;
@@ -34,6 +40,13 @@ void SpriteSheet::SetSpriteSize(const sf::Vector2i & lSize)
 void SpriteSheet::SetSpritePosition(const sf::Vector2f & lPos)
 {
 	mSprite.setPosition(lPos);
+}
+
+void SpriteSheet::SetSpriteDirection(const Dir & lDir)
+{
+	if (lDir == mDirection) { return; }
+	mDirection = lDir;
+	mCurrentAnimation->CropSprite();
 }
 
 bool SpriteSheet::LoadSheet(const std::string & lPath)

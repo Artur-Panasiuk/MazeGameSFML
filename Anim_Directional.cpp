@@ -28,7 +28,7 @@ void Anim_Directional::CropSprite()
 {
 	sf::IntRect rect;
 	rect.left = mSpriteSheet->GetSpriteSize().x * mFrameCurrent;
-	rect.top = mSpriteSheet->GetSpriteSize().y * mFrameRow;
+	rect.top = mSpriteSheet->GetSpriteSize().y * (mFrameRow + (int)mSpriteSheet->GetDirection());
 	rect.width = mSpriteSheet->GetSpriteSize().x;
 	rect.height = mSpriteSheet->GetSpriteSize().y;
 	mSpriteSheet->CropSprite(rect);

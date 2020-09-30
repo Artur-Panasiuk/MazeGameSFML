@@ -4,12 +4,10 @@
 #include <algorithm>
 #include "TextureManager.h"
 #include "Maze.h"
+#include "SpriteSheet.h"
+#include "Direction.h"
 
 
-enum class Dir
-{
-	Up, Down, Left, Right
-};
 
 struct CollisionElement
 {
@@ -28,14 +26,11 @@ class StateManager;
 class Player
 {
 public:
-	Player();
+	Player(TextureManager* lTex);
 	~Player();
 
-	void SetTextureManager(TextureManager* lTextureManager);
 	void SetMap(Maze* lMaze);
-	void SetTexture(const std::string& lName);
 	void SetStateManager(StateManager* lState);
-	void ReleaseTexture();
 
 	void SetPosition(const sf::Vector2f& lPos);
 	sf::Vector2f GetPosition();
@@ -50,10 +45,11 @@ private:
 	void CheckForCollisions();
 	void ResolveCollisions();
 
-	sf::Sprite mSpriteSheet;//placeholderowy typ
+	SpriteSheet mSpriteSheet;
 	std::string mTexture;
 	sf::Vector2f mAcceleration;
 	sf::Vector2f mVelocity;
+	sf::Vector2f mPosition;
 	float mSpeed;
 	float mMaxVelocity;
 	float mBaseFriction;

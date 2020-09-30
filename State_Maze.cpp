@@ -2,7 +2,7 @@
 #include "StateManager.h"
 
 State_Maze::State_Maze(StateManager * lStateManager)
-	:BaseState(lStateManager), mZoom(0.4), mDebugMode(false)
+	:BaseState(lStateManager), mZoom(0.4), mDebugMode(false), mPlayer(lStateManager->GetContext()->mTextureManager)
 {
 }
 
@@ -22,8 +22,6 @@ void State_Maze::OnCreate()
 	mMaze.LoadFragments();
 	mMaze.GenerateNewMaze();
 	mPlayer.SetMap(&mMaze);
-	mPlayer.SetTextureManager(mStateManager->GetContext()->mTextureManager);
-	mPlayer.SetTexture("Player");
 	mPlayer.SetStateManager(mStateManager);
 	mPlayer.SetPosition(mMaze.GetStartingPos());
 	mStateManager->GetContext()->mTextureManager->RequireResource("Filter");
@@ -40,7 +38,6 @@ void State_Maze::OnDestroy()
 	mStateManager->GetContext()->mEventManager->RemoveCallback(StateType::Maze, "H");
 	mStateManager->GetContext()->mTextureManager->ReleaseResource("Filter");
 	mMaze.PurgeTileSet();
-	mPlayer.ReleaseTexture();
 }
 
 void State_Maze::Activate()

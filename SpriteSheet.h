@@ -2,8 +2,8 @@
 #include "TextureManager.h"
 #include "BaseAnim.h"
 #include "Anim_Directional.h"
+#include "Direction.h"
 
-//bez direction (po co to tam jest?)
 class SpriteSheet
 {
 public:
@@ -14,8 +14,10 @@ public:
 
 	sf::Vector2i GetSpriteSize()const;
 	sf::Vector2f GetSpritePosition()const;
+	Dir GetDirection();
 	void SetSpriteSize(const sf::Vector2i& lSize);
 	void SetSpritePosition(const sf::Vector2f& lPos);
+	void SetSpriteDirection(const Dir& lDir);
 
 	bool LoadSheet(const std::string& lPath);
 	void ReleaseSheet();
@@ -30,6 +32,7 @@ private:
 	sf::Sprite mSprite;
 	sf::Vector2i mSpriteSize;
 	sf::Vector2f mSpriteScale;
+	Dir mDirection;
 	std::string mAnimType;
 	std::unordered_map<std::string, BaseAnim*> mAnimations;
 	BaseAnim* mCurrentAnimation;
