@@ -3,6 +3,7 @@
 Game::Game()
 	:mStateManager(&mContext)
 {
+	srand(time(NULL));
 	mClock.restart();
 
 	mContext.mWindow = &mWindow;
@@ -49,7 +50,7 @@ sf::Time Game::GetElapsed()
 
 void Game::RestartClock()
 {
-	mElapsed += mClock.restart();
+	mElapsed = mClock.restart();
 }
 
 Window * Game::GetWindow()

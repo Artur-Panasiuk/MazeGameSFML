@@ -1,8 +1,10 @@
 #include "Window.h"
 
 Window::Window()
-	: mIsFullscreen(false), mIsDone(false)
+	: mResolution(854, 480), mIsFullscreen(false), mIsDone(false)
 {
+	mDefaultView.setCenter(mResolution.x / 2, mResolution.y / 2);
+	mDefaultView.setSize(mResolution.x, mResolution.y);
 	mEventManager.AddCallback(StateType(0), "Close", &Window::EndProgram, this);
 	mEventManager.AddCallback(StateType(0), "ToggleFullscreen", &Window::ToggleFullscreen, this);
 	Open();
@@ -16,7 +18,7 @@ Window::~Window()
 void Window::Open()
 {
 	sf::Uint32 style = { mIsFullscreen ? (sf::Uint32)sf::Style::Fullscreen : (sf::Uint32)sf::Style::Titlebar | sf::Style::Close};
-	mWindow.create(sf::VideoMode(854, 480, 32), "MazeGame", style);
+	mWindow.create(sf::VideoMode(mResolution.x, mResolution.y, 32), "MazeGame", style);
 	mWindow.setFramerateLimit(60);
 }
 
@@ -83,6 +85,11 @@ sf::FloatRect Window::GetViewSpace()
 	sf::Vector2f viewSizeHalf(viewSize.x / 2, viewSize.y / 2);
 	sf::FloatRect viewSpace(viewCenter - viewSizeHalf, viewSize);
 	return viewSpace;
+}
+
+sf::View & Window::GetDefaultView()
+{
+	return mDefaultView;
 }
 
 EventManager * Window::GetEventManager()

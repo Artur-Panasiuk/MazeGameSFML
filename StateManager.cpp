@@ -114,7 +114,7 @@ void StateManager::CreateState(const StateType & lState)
 	auto newState = mStateFactory.find(lState);
 	if (newState == mStateFactory.end()) { return; }
 	BaseState* state = mStateFactory[lState]();
-	state->mView = mContext->mWindow->GetRenderWindow()->getDefaultView();
+	state->mView = mContext->mWindow->GetDefaultView();
 	mStates.emplace_back(lState, state);
 	state->OnCreate();
 }

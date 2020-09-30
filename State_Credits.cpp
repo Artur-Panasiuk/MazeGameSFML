@@ -21,7 +21,7 @@ void State_Credits::OnCreate() {
 	mStateManager->GetContext()->mEventManager->AddCallback(StateType::Credits, "Enter", &State_Credits::GoBackMenu, this);
 
 	exit.setFont(*MainFont);
-	exit.setString(">EXIT<");
+	exit.setString(">BACK<");
 	exit.setFillColor(sf::Color::Red);
 	exit.setCharacterSize(30);
 	exit.setPosition(sf::Vector2f(126.0, 320.0));

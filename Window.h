@@ -21,6 +21,7 @@ public:
 	void Update();
 
 	sf::FloatRect GetViewSpace();
+	sf::View& GetDefaultView();
 	EventManager* GetEventManager();
 	sf::RenderWindow* GetRenderWindow();
 private:
@@ -30,5 +31,7 @@ private:
 	bool mIsDone;
 	bool mIsFullscreen;
 	sf::RenderWindow mWindow;
+	const sf::Vector2i mResolution;
+	sf::View mDefaultView;
 	EventManager mEventManager;
 };
