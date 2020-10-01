@@ -16,4 +16,13 @@ public:
 	void Draw();
 	void Update(const sf::Time& lTime);
 private:
+	void ChangeOptionLeft(EventDetails* lDetails);
+	void ChangeOptionRight(EventDetails* lDetails);
+	void Enter(EventDetails* lDetails);
+
+	sf::Text mCongrats;
+	sf::Text mNewGame;
+	sf::Text mExit;
+
+	int mOption;
 };

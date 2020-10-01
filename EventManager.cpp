@@ -15,6 +15,12 @@ void EventManager::SetupBindingsManualy()
 	newBinding->BindEvent(EventType::KeyDown, KeyCode(sf::Keyboard::S));
 	AddBinding("S", newBinding);
 	newBinding = new Binding;
+	newBinding->BindEvent(EventType::KeyDown, KeyCode(sf::Keyboard::A));
+	AddBinding("A", newBinding);
+	newBinding = new Binding;
+	newBinding->BindEvent(EventType::KeyDown, KeyCode(sf::Keyboard::D));
+	AddBinding("D", newBinding);
+	newBinding = new Binding;
 	newBinding->BindEvent(EventType::Keyboard, KeyCode(sf::Keyboard::A));
 	AddBinding("RealTimeA", newBinding);
 	newBinding = new Binding;

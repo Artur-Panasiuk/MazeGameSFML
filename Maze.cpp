@@ -17,7 +17,7 @@ void Maze::GenerateNewMaze()
 	mStart.y = 1.f*(mMazeSize / 2 + 1)*FragmentHeight*TileSize + FragmentHeight * TileSize / 2;
 	FillBoundaries();
 	AddWallsWhereNeeded();
-	//PlaceEndPortal(floor(mStart.x / TileSize), floor(mStart.y / TileSize));
+	PlaceEndPortal(floor(mStart.x / TileSize), floor(mStart.y / TileSize));
 }
 
 void Maze::Draw(sf::RenderWindow * lWind, const sf::FloatRect& lView)
@@ -262,17 +262,17 @@ void Maze::PlaceEndPortal(int x, int y)//za d³ugo dzia³a ;(
 	}
 
 	que.push(std::make_pair(y, x));
+	isVisited[coords.first][coords.second] = true;
 	while (!que.empty())
 	{
 		coords = que.front();
-		isVisited[coords.first][coords.second] = true;
 		que.pop();
-		//std::cout << mMap[coords.first][coords.second]->mTexture << std::endl;
 		if (mMap[coords.first + 1][coords.second] != nullptr)
 		{
 			if (mMap[coords.first + 1][coords.second]->mIsCollidable == false && isVisited[coords.first + 1][coords.second] == false)
 			{
 				que.push(std::make_pair(coords.first + 1, coords.second));
+				isVisited[coords.first + 1][coords.second] = true;
 			}
 		}
 		if (mMap[coords.first - 1][coords.second] != nullptr)
@@ -280,6 +280,7 @@ void Maze::PlaceEndPortal(int x, int y)//za d³ugo dzia³a ;(
 			if (mMap[coords.first - 1][coords.second]->mIsCollidable == false && isVisited[coords.first - 1][coords.second] == false)
 			{
 				que.push(std::make_pair(coords.first - 1, coords.second));
+				isVisited[coords.first - 1][coords.second] = true;
 			}
 		}
 		if (mMap[coords.first][coords.second + 1] != nullptr)
@@ -287,6 +288,7 @@ void Maze::PlaceEndPortal(int x, int y)//za d³ugo dzia³a ;(
 			if (mMap[coords.first][coords.second + 1]->mIsCollidable == false && isVisited[coords.first][coords.second + 1] == false)
 			{
 				que.push(std::make_pair(coords.first, coords.second + 1));
+				isVisited[coords.first][coords.second + 1] = true;
 			}
 		}
 		if (mMap[coords.first][coords.second - 1] != nullptr)
@@ -294,6 +296,7 @@ void Maze::PlaceEndPortal(int x, int y)//za d³ugo dzia³a ;(
 			if (mMap[coords.first][coords.second - 1]->mIsCollidable == false && isVisited[coords.first][coords.second - 1] == false)
 			{
 				que.push(std::make_pair(coords.first, coords.second - 1));
+				isVisited[coords.first][coords.second - 1] = true;
 			}
 		}
 	}

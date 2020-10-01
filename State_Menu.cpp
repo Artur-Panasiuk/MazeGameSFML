@@ -22,12 +22,10 @@ void State_Menu::OnCreate(){
 
 	mStateManager->GetContext()->mEventManager->AddCallback(StateType::Menu, "W", &State_Menu::ChangeOptionUp, this);
 	mStateManager->GetContext()->mEventManager->AddCallback(StateType::Menu, "S", &State_Menu::ChangeOptionDown, this);
-
 	mStateManager->GetContext()->mEventManager->AddCallback(StateType::Menu, "Enter", &State_Menu::ChooseOptionEnter, this);
 
 	play.setFont(*MainFont);
 	play.setString(">PLAY<");
-	//play.setFillColor(sf::Color::Red);
 	play.setCharacterSize(30);
 	play.setPosition(sf::Vector2f(120.0, 170.0));
 

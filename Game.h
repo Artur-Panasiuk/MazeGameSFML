@@ -4,7 +4,6 @@
 #include "StateManager.h"
 #include "TextureManager.h"
 #include "FontManager.h"
-#include "AudioManager.h"
 
 class Game
 {
@@ -30,6 +29,5 @@ private:
 	SharedContext mContext;
 	TextureManager mTextureManger;
 	FontManager mFontManager;
-	AudioManager mAudioManager;
 	StateManager mStateManager;
 };

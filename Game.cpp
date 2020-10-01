@@ -10,7 +10,6 @@ Game::Game()
 	mContext.mEventManager = mWindow.GetEventManager();
 	mContext.mTextureManager = &mTextureManger;
 	mContext.mFontManager = &mFontManager;
-	mContext.mAudioManager = &mAudioManager;
 
 	mStateManager.SwitchTo(StateType::Menu);
 }
